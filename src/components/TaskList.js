@@ -1,21 +1,22 @@
 import React from "react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import "./TaskList.css";
+import TaskItem from "./TaskItem";
 
-const TaskList = ({ tasks, deleteTask }) => {
+const TaskList = ({ tasks, deleteTask, toggleComplete }) => {
+  if (!Array.isArray(tasks)) {
+    console.error("tasks is not an array:", tasks);
+    return <p>Error: Task list is corrupted</p>;
+  }
+
   return (
-    <TransitionGroup component="ul" className="list-group mt-3">
-      {tasks.map((task, index) => (
-        <CSSTransition key={index} timeout={500} classNames="fade">
-          <li className="list-group-item d-flex justify-content-between align-items-center">
-            {task}
-            <button className="btn btn-danger btn-sm" onClick={() => deleteTask(index)}>
-              ❌ Delete
-            </button>
-          </li>
-        </CSSTransition>
-      ))}
-    </TransitionGroup>
+    <ul className="list-group mt-3">
+      {tasks.length === 0 ? (
+        <p className="text-center">No tasks found</p>
+      ) : (
+        tasks.map((task, index) => (
+          <TaskItem key={index} task={task} index={index} deleteTask={deleteTask} toggleComplete={toggleComplete} />
+        ))
+      )}
+    </ul>
   );
 };
 

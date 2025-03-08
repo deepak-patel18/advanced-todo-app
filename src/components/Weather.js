@@ -11,9 +11,7 @@ const Weather = () => {
 
   const fetchWeather = (cityName) => {
     axios
-      .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`
-      )
+      .get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`)
       .then((response) => {
         setWeather(response.data);
         setError("");
@@ -34,11 +32,6 @@ const Weather = () => {
   const handleCitySelect = (e) => {
     setCity(e.target.value);
     fetchWeather(e.target.value);
-  };
-
-  // Function to get weather icon from OpenWeatherMap API
-  const getWeatherIcon = (iconCode) => {
-    return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
   };
 
   return (
@@ -73,7 +66,6 @@ const Weather = () => {
         <div className="alert alert-info mt-3">
           <h6>🌍 {weather.name}, {weather.sys.country}</h6>
           <p>🌡 {weather.main.temp}°C | {weather.weather[0].description}</p>
-          <img src={getWeatherIcon(weather.weather[0].icon)} alt="Weather Icon" />
         </div>
       )}
     </div>
